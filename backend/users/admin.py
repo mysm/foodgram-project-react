@@ -16,6 +16,7 @@ class MyUserAdmin(UserAdmin):
         (
             "username",
             "email",
+
         ),
         (
             "first_name",

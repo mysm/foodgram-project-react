@@ -20,6 +20,15 @@ class IngredientInline(TabularInline):
     model = IngredientAmount
     extra = 2
     autocomplete_fields = ("ingredient",)
+    min_num = 1
+
+
+@register(IngredientAmount)
+class IngredientAmount(ModelAdmin):
+    list_display = ("id", "recipe", "ingredient", "amount")
+    search_fields = ("recipe", "ingredient")
+    list_filter = ("id", "recipe", "ingredient")
+    empy_value_display = EMPTY_VALUE_DISPLAY
 
 
 @register(FavoriteRecipe)
@@ -69,8 +78,8 @@ class RecipeAdmin(ModelAdmin):
         ("text",),
         ("image",),
     )
-    search_fields = ("name", "author", "tags")
-    list_filter = ("name", "author__username", "tags", "pub_date")
+    search_fields = ("name", "author__username", "tags__name")
+    list_filter = ("name", "author__username", "tags__name", "pub_date")
     filter_vertical = ("tags",)
 
     inlines = (IngredientInline,)

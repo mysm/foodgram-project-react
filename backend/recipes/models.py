@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 from django.db import models
 
 MAX_LEN_RECIPES = 255
@@ -115,6 +116,11 @@ class Recipe(models.Model):
         verbose_name = "Рецепт"
         verbose_name_plural = "Рецепты"
         ordering = ("-pub_date",)
+        constraints = (
+            models.UniqueConstraint(
+                fields=("name", "author"), name="unique_for_author"
+            ),
+        )
 
     def __str__(self):
         return f"Автор: {self.author.username} рецепт: {self.name}"
