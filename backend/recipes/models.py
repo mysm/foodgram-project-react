@@ -189,7 +189,10 @@ class FavoriteRecipe(models.Model):
         ordering = ("id",)
 
     def __str__(self):
-        return f"Пользователь: {self.user.username} рецепт: {self.favorite_recipe.name}"
+        return (
+            f"Пользователь: {self.user.username} "
+            "рецепт: {self.favorite_recipe.name}"
+        )
 
 
 class Subscribe(models.Model):
