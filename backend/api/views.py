@@ -5,37 +5,21 @@ from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import (
-    SAFE_METHODS,
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly,
-)
+from rest_framework.permissions import (SAFE_METHODS, IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
 
-from recipes.models import (
-    FavoriteRecipe,
-    Ingredient,
-    Recipe,
-    ShoppingCart,
-    Subscribe,
-    Tag,
-)
+from recipes.models import (FavoriteRecipe, Ingredient, Recipe, ShoppingCart,
+                            Subscribe, Tag)
 
 from .filters import IngredientFilter, RecipesFilter
 from .mixins import CreateDestroyViewSet
 from .permissions import IsAuthorOrReadOnly
-from .serializers import (
-    FavoriteRecipeSerializer,
-    IngredientSerializer,
-    RecipeEditSerializer,
-    RecipeReadSerializer,
-    SetPasswordSerializer,
-    ShoppingCartSerializer,
-    SubscribeSerializer,
-    TagSerializer,
-    UserCreateSerializer,
-    UserListSerializer,
-)
+from .serializers import (FavoriteRecipeSerializer, IngredientSerializer,
+                          RecipeEditSerializer, RecipeReadSerializer,
+                          SetPasswordSerializer, ShoppingCartSerializer,
+                          SubscribeSerializer, TagSerializer,
+                          UserCreateSerializer, UserListSerializer)
 
 User = get_user_model()
 
