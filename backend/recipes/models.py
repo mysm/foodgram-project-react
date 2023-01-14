@@ -60,12 +60,15 @@ class Ingredient(models.Model):
         "Название ингредиента",
         max_length=MAX_LEN_RECIPES,
     )
-    measurement_unit = models.CharField("Единицы измерения", max_length=MAX_LEN_RECIPES)
+    measurement_unit = models.CharField(
+        "Единицы измерения", max_length=MAX_LEN_RECIPES
+    )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=("name", "measurement_unit"), name="unique_name_measurement"
+                fields=("name", "measurement_unit"),
+                name="unique_name_measurement",
             )
         ]
         verbose_name = "Ингредиент"
@@ -109,7 +112,9 @@ class Recipe(models.Model):
         default=1,
         validators=(MinValueValidator(1, "Минимум 1 минута"),),
     )
-    pub_date = models.DateTimeField("Дата публикации рецепта", auto_now_add=True)
+    pub_date = models.DateTimeField(
+        "Дата публикации рецепта", auto_now_add=True
+    )
 
     class Meta:
         verbose_name = "Рецепт"
@@ -195,7 +200,10 @@ class Subscribe(models.Model):
         verbose_name="Подписчик",
     )
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="following", verbose_name="Автор"
+        User,
+        on_delete=models.CASCADE,
+        related_name="following",
+        verbose_name="Автор",
     )
     created = models.DateTimeField("Дата подписки", auto_now_add=True)
 
@@ -210,7 +218,9 @@ class Subscribe(models.Model):
         ]
 
     def __str__(self):
-        return f"Пользователь: {self.user.username} автор: {self.author.username}"
+        return (
+            f"Пользователь: {self.user.username} автор: {self.author.username}"
+        )
 
 
 class ShoppingCart(models.Model):
@@ -231,7 +241,8 @@ class ShoppingCart(models.Model):
         ordering = ("id",)
         constraints = [
             models.UniqueConstraint(
-                fields=("user", "recipe"), name="unique recipe in shopping cart"
+                fields=("user", "recipe"),
+                name="unique recipe in shopping cart",
             )
         ]
         verbose_name = "Список покупок"

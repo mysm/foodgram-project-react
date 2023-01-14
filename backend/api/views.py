@@ -5,21 +5,37 @@ from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import (SAFE_METHODS, IsAuthenticated,
-                                        IsAuthenticatedOrReadOnly)
+from rest_framework.permissions import (
+    SAFE_METHODS,
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.response import Response
 
-from recipes.models import (FavoriteRecipe, Ingredient, Recipe, ShoppingCart,
-                            Subscribe, Tag)
+from recipes.models import (
+    FavoriteRecipe,
+    Ingredient,
+    Recipe,
+    ShoppingCart,
+    Subscribe,
+    Tag,
+)
 
 from .filters import IngredientFilter, RecipesFilter
 from .mixins import CreateDestroyViewSet
 from .permissions import IsAuthorOrReadOnly
-from .serializers import (FavoriteRecipeSerializer, IngredientSerializer,
-                          RecipeEditSerializer, RecipeReadSerializer,
-                          SetPasswordSerializer, ShoppingCartSerializer,
-                          SubscribeSerializer, TagSerializer,
-                          UserCreateSerializer, UserListSerializer)
+from .serializers import (
+    FavoriteRecipeSerializer,
+    IngredientSerializer,
+    RecipeEditSerializer,
+    RecipeReadSerializer,
+    SetPasswordSerializer,
+    ShoppingCartSerializer,
+    SubscribeSerializer,
+    TagSerializer,
+    UserCreateSerializer,
+    UserListSerializer,
+)
 
 User = get_user_model()
 
@@ -46,7 +62,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def download_file(self, request):
         user = request.user
         if not user.shopping_cart.exists():
-            return Response("В корзине нет товаров", status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                "В корзине нет товаров", status=status.HTTP_400_BAD_REQUEST
+            )
 
         text = "Список покупок:\n\n"
         ingredient_name = "recipe__recipe__ingredient__name"
@@ -61,7 +79,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
         )
         for _ in cart:
             text += (
-                f"{_[ingredient_name]} ({_[ingredient_unit]})" f" — {_[amount_sum]}\n"
+                f"{_[ingredient_name]} ({_[ingredient_unit]})"
+                f" — {_[amount_sum]}\n"
             )
         response = HttpResponse(text, content_type="text/plain")
         filename = "shopping_list.txt"
@@ -132,12 +151,16 @@ class SubscribeViewSet(CreateDestroyViewSet):
     @action(methods=("delete",), detail=True)
     def delete(self, request, user_id):
         get_object_or_404(User, id=user_id)
-        if not Subscribe.objects.filter(user=request.user, author_id=user_id).exists():
+        if not Subscribe.objects.filter(
+            user=request.user, author_id=user_id
+        ).exists():
             return Response(
                 {"errors": "Вы не были подписаны на автора"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        get_object_or_404(Subscribe, user=request.user, author_id=user_id).delete()
+        get_object_or_404(
+            Subscribe, user=request.user, author_id=user_id
+        ).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -156,7 +179,9 @@ class FavoriteRecipeViewSet(CreateDestroyViewSet):
     def perform_create(self, serializer):
         serializer.save(
             user=self.request.user,
-            favorite_recipe=get_object_or_404(Recipe, id=self.kwargs.get("recipe_id")),
+            favorite_recipe=get_object_or_404(
+                Recipe, id=self.kwargs.get("recipe_id")
+            ),
         )
 
     @action(methods=("delete",), detail=True)
@@ -168,7 +193,8 @@ class FavoriteRecipeViewSet(CreateDestroyViewSet):
             .exists()
         ):
             return Response(
-                {"errors": "Рецепт не в избранном"}, status=status.HTTP_400_BAD_REQUEST
+                {"errors": "Рецепт не в избранном"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
         get_object_or_404(
             FavoriteRecipe, user=request_user, favorite_recipe_id=recipe_id
@@ -203,7 +229,10 @@ class ShoppingCartViewSet(CreateDestroyViewSet):
             .exists()
         ):
             return Response(
-                {"errors": "Рецепта нет в корзине"}, status=status.HTTP_400_BAD_REQUEST
+                {"errors": "Рецепта нет в корзине"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
-        get_object_or_404(ShoppingCart, user=request_user, recipe=recipe_id).delete()
+        get_object_or_404(
+            ShoppingCart, user=request_user, recipe=recipe_id
+        ).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -54,7 +54,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "measurement_unit",
-                    models.CharField(max_length=255, verbose_name="Единицы измерения"),
+                    models.CharField(
+                        max_length=255, verbose_name="Единицы измерения"
+                    ),
                 ),
             ],
             options={
@@ -80,7 +82,9 @@ class Migration(migrations.Migration):
                     models.PositiveIntegerField(
                         default=1,
                         validators=[
-                            django.core.validators.MinValueValidator(1, "Минимум 1")
+                            django.core.validators.MinValueValidator(
+                                1, "Минимум 1"
+                            )
                         ],
                         verbose_name="Количество",
                     ),
@@ -115,12 +119,15 @@ class Migration(migrations.Migration):
                 (
                     "image",
                     models.ImageField(
-                        upload_to="recipes/images", verbose_name="Изображение рецепта"
+                        upload_to="recipes/images",
+                        verbose_name="Изображение рецепта",
                     ),
                 ),
                 (
                     "name",
-                    models.CharField(max_length=255, verbose_name="Название рецепта"),
+                    models.CharField(
+                        max_length=255, verbose_name="Название рецепта"
+                    ),
                 ),
                 ("text", models.TextField(verbose_name="Описание рецепта")),
                 (
@@ -138,7 +145,8 @@ class Migration(migrations.Migration):
                 (
                     "pub_date",
                     models.DateTimeField(
-                        auto_now_add=True, verbose_name="Дата публикации рецепта"
+                        auto_now_add=True,
+                        verbose_name="Дата публикации рецепта",
                     ),
                 ),
                 (
@@ -180,7 +188,9 @@ class Migration(migrations.Migration):
                 (
                     "name",
                     models.CharField(
-                        max_length=255, unique=True, verbose_name="Название тега"
+                        max_length=255,
+                        unique=True,
+                        verbose_name="Название тега",
                     ),
                 ),
                 (
@@ -314,7 +324,8 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="ingredient",
             constraint=models.UniqueConstraint(
-                fields=("name", "measurement_unit"), name="unique_name_measurement"
+                fields=("name", "measurement_unit"),
+                name="unique_name_measurement",
             ),
         ),
         migrations.AddField(
@@ -346,7 +357,8 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="shoppingcart",
             constraint=models.UniqueConstraint(
-                fields=("user", "recipe"), name="unique recipe in shopping cart"
+                fields=("user", "recipe"),
+                name="unique recipe in shopping cart",
             ),
         ),
         migrations.AddConstraint(
