@@ -3,7 +3,7 @@ from django.db.models import Count
 from django.utils.safestring import mark_safe
 
 from .models import (FavoriteRecipe, Ingredient, IngredientAmount, Recipe,
-                     ShoppingCart, Subscribe, Tag,)
+                     ShoppingCart, Subscribe, Tag)
 
 site.site_header = "Администрирование Foodgram"
 EMPTY_VALUE_DISPLAY = "Значение не указано"
