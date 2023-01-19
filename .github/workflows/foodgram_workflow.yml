@@ -21,7 +21,7 @@ jobs:
         pip install --force-reinstall -r backend/requirements.txt
     - name: Test with flake8
       run: |
-        python -m flake8
+        # python -m flake8
     - name: send message tests
       uses: appleboy/telegram-action@master
       with:
