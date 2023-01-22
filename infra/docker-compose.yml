@@ -20,7 +20,7 @@ services:
       - ./.env
 
   frontend:
-    image: mysmster/foodgram_frontend:latest
+    image: mysmster/foodgram_frontend:v1
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
