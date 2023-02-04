@@ -68,7 +68,6 @@ docker-compose exec backend python manage.py data_test
 
 
 Администратор:
-
 `Логин: admin`
-
-`Пароль: ccpass!ccpass`
+`email: mysm@mail.ru`
+`Пароль: admin`
