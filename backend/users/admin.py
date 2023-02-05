@@ -7,6 +7,7 @@ from .models import User
 @register(User)
 class MyUserAdmin(UserAdmin):
     list_display = (
+        "id",
         "username",
         "first_name",
         "last_name",
